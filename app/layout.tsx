@@ -6,6 +6,11 @@ import PaddingWrapper from "./PaddingWrapper";
 export const metadata = {
   title: "Adidaya Studio",
   description: "Architecture • Design • Development",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 import type { ReactNode } from "react";
@@ -14,6 +19,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" />
+        <link rel="icon" href="/favicon-192.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      </head>
       <body className="bg-adidaya-bg text-adidaya-text font-sans">
         <Navbar />
         

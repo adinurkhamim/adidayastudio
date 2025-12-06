@@ -14,21 +14,26 @@ export default function MobileMenu({ open, onClose, navItems }: MobileMenuProps)
   return (
     <div
       className={cn(
-        "fixed inset-0 z-50 transform transition-all duration-300",
-        open ? "translate-x-0" : "translate-x-full"
+        "fixed inset-0 z-[99999] transition-all duration-300",
+        open ? "pointer-events-auto" : "pointer-events-none"
       )}
     >
       {/* BACKDROP */}
       <div
         onClick={onClose}
         className={cn(
-          "absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity",
-          open ? "opacity-100" : "opacity-0 pointer-events-none"
+          "absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300",
+          open ? "opacity-100" : "opacity-0"
         )}
       />
 
       {/* DRAWER */}
-      <div className="absolute right-0 top-0 h-full w-[75%] max-w-[320px] bg-adidaya-bg border-l border-adidaya-border p-6 flex flex-col">
+      <div
+        className={cn(
+          "absolute right-0 top-0 h-full w-[75%] max-w-[320px] bg-adidaya-bg border-l border-adidaya-border p-6 flex flex-col transition-transform duration-300",
+          open ? "translate-x-0" : "translate-x-full"
+        )}
+      >
         <div className="flex justify-between items-center mb-8">
           <p className="text-h3 font-semibold">Menu</p>
 
