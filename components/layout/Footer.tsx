@@ -8,18 +8,17 @@ export default function Footer() {
       <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
 
         {/* =========================================================
-           LEFT (Logo + Tagline)
+           DESKTOP LEFT (Logo + Tagline) — unchanged
         ========================================================= */}
-        <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           <Image
             src="/logo-adidaya-red.svg"
             alt="Adidaya Logo"
             width={28}
             height={28}
-            className="flex-shrink-0"
           />
 
-          <div className="flex flex-col text-center md:text-left">
+          <div className="flex flex-col">
             <p className="text-body font-semibold text-adidaya-text-muted">
               <span className="font-bold">adidaya</span>
               <span className="font-light">studio</span>
@@ -32,8 +31,7 @@ export default function Footer() {
         </div>
 
         {/* =========================================================
-           MIDDLE (Social icons)
-           • HIDDEN on mobile
+           DESKTOP MIDDLE (icons)
         ========================================================= */}
         <div className="hidden md:flex items-center gap-6">
           <Link
@@ -53,8 +51,7 @@ export default function Footer() {
         </div>
 
         {/* =========================================================
-           RIGHT (Desktop)
-           • Shown only on md+
+           DESKTOP RIGHT (unchanged)
         ========================================================= */}
         <div className="hidden md:block text-right text-body-sm text-adidaya-text-muted leading-tight">
           <p>© 2025 PT Mahardika Adidaya</p>
@@ -62,10 +59,33 @@ export default function Footer() {
         </div>
 
         {/* =========================================================
-           MOBILE-ONLY FOOTER (centered)
-           • Clean, minimal, no icons
+           MOBILE VERSION — FULL VERTICAL STACK
         ========================================================= */}
-        <div className="md:hidden flex flex-col items-center justify-center text-center text-adidaya-text-muted">
+        <div className="md:hidden flex flex-col items-center text-center gap-3">
+
+          {/* Logo */}
+          <Image
+            src="/logo-adidaya-red.svg"
+            alt="Adidaya Logo"
+            width={32}
+            height={32}
+          />
+
+          {/* Name */}
+          <p className="text-body font-semibold text-adidaya-text-muted">
+            <span className="font-bold">adidaya</span>
+            <span className="font-light">studio</span>
+          </p>
+
+          {/* Tagline */}
+          <p className="text-xs text-adidaya-text-muted">
+            architecture • construction • development
+          </p>
+
+          {/* Spacer */}
+          <div className="h-2" />
+
+          {/* Copyright */}
           <p className="text-body-sm opacity-80">© 2025 PT Mahardika Adidaya</p>
           <p className="text-xs opacity-70">All rights reserved</p>
         </div>
