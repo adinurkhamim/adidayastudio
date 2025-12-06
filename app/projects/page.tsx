@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
@@ -9,7 +10,6 @@ import { supabase } from "@/lib/supabaseClient";
 
 import ProjectCard from "./ProjectCard";
 import FilterBar, { type Filter } from "./sections/FilterBar";
-
 import ProjectSectionHeader from "./sections/ProjectSectionHeader";
 
 type Project = {
@@ -24,14 +24,20 @@ type Project = {
   order_index: number | null;
 };
 
-export default function ProjectsPage() {
-  const params = useSearchParams();
+/* WRAPPER WAJIB (fix Next.js 16 error) */
+export default function ProjectsPageWrapper() {
+  return (
+    <Suspense fallback={null}>
+      <ProjectsPage />
+    </Suspense>
+  );
+}
 
-  // GET URL PARAMS
+function ProjectsPage() {
+  const params = useSearchParams();
   const urlCategory = params.get("category");
   const urlSub = params.get("sub");
 
-  // FILTER STATE
   const [filter, setFilter] = useState<Filter>({
     category: null,
     subcategory: null,
@@ -40,30 +46,21 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeTab, setActiveTab] = useState("all");
 
-  /* APPLY URL QUERY ONCE */
+  const capitalize = (str: string) =>
+    str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
   useEffect(() => {
     if (urlCategory && urlCategory !== "all") {
-      setFilter({
-        category: capitalize(urlCategory),
-        subcategory: null,
-      });
+      setFilter({ category: capitalize(urlCategory), subcategory: null });
       setActiveTab(capitalize(urlCategory));
     }
 
     if (urlSub && urlSub !== "all") {
-      setFilter({
-        category: null,
-        subcategory: capitalize(urlSub),
-      });
-      setActiveTab("all"); // subcategory doesn't choose a tab
+      setFilter({ category: null, subcategory: capitalize(urlSub) });
+      setActiveTab("all");
     }
   }, []);
 
-  /* HELPER */
-  const capitalize = (str: string) =>
-    str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-
-  /* FETCH PROJECTS */
   useEffect(() => {
     async function fetchProjects() {
       let query = supabase
@@ -74,22 +71,12 @@ export default function ProjectsPage() {
         .eq("is_published", true)
         .order("order_index", { ascending: true });
 
-      if (filter.category) {
-        query = query.contains("categories", [filter.category]);
-      }
-
-      if (filter.subcategory) {
+      if (filter.category) query = query.contains("categories", [filter.category]);
+      if (filter.subcategory)
         query = query.contains("subcategories", [filter.subcategory]);
-      }
 
       const { data, error } = await query;
-
-      if (error) {
-        console.error(error);
-        setProjects([]);
-      } else {
-        setProjects((data ?? []) as Project[]);
-      }
+      setProjects(error ? [] : (data ?? []));
     }
 
     fetchProjects();
@@ -97,14 +84,9 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white px-6 lg:px-20 py-16">
-
-      {/* TITLE */}
       <ProjectSectionHeader title="Projects" />
-
-      {/* FULL FILTER BAR */}
       <FilterBar onFilterChange={setFilter} initialFilter={filter} />
 
-      {/* GRID */}
       {projects.length === 0 ? (
         <p className="text-center text-gray-500 mt-20">No projects found.</p>
       ) : (

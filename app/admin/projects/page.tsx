@@ -598,7 +598,7 @@ export default function AdminProjectListPage() {
 
               {/* New Project (semua role boleh create) */}
               <button
-                onClick={() => router.push("/admin/project/create")}
+                onClick={() => router.push("/admin/projects/create")}
                 className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-black shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:bg-adidaya-red hover:text-white"
               >
                 + Create Project
