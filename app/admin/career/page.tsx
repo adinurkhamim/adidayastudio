@@ -244,8 +244,8 @@ if (!profileLoading && profile?.role === "staff") {
   );
 }
   return (
-    <div className="p-10 space-y-10">
-
+    <div className="min-h-screen bg-black pb-20 pt-10">
+      <div className="mx-auto w-full max-w-5xl px-4 space-y-10">
       {/* HEADER */}
         {/* HEADER */}
         <div className="mb-10">
@@ -603,7 +603,7 @@ if (!profileLoading && profile?.role === "staff") {
         </div>
       )}
 
-
+    </div>
     </div>
   );
 }
